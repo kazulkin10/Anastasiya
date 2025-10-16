@@ -4,21 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Стюха ✧ Егор — 8 лет и дальше</title>
-  <meta name="description" content="Космическая тёплая история Насти и Егора: музыка, галерея, сказка и звёздные анимации.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="icon" href="icons/favicon.png">
-  <link rel="apple-touch-icon" href="icons/apple-touch.png">
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0b0b0f">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="./icons/favicon.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch.png">
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container row">
-      <a class="logo" href="#hero" aria-label="На главную">Стюха<span>✧</span>Егор</a>
-      <nav class="nav" aria-label="Навигация">
+      <a class="logo" href="#hero">Стюха<span>✧</span>Егор</a>
+      <nav class="nav">
         <a href="#story">История</a>
         <a href="#music">Музыка</a>
         <a href="#gallery">Галерея</a>
@@ -30,23 +24,19 @@
   <main>
     <section id="hero" class="hero">
       <div class="space">
-        <canvas id="layer-back" aria-hidden="true"></canvas>
-        <canvas id="layer-mid" aria-hidden="true"></canvas>
-        <canvas id="layer-front" aria-hidden="true"></canvas>
-        <div class="nebula n1"></div>
-        <div class="nebula n2"></div>
-        <div class="nebula n3"></div>
+        <canvas id="layer-back"></canvas>
+        <canvas id="layer-mid"></canvas>
+        <canvas id="layer-front"></canvas>
+        <div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div>
       </div>
       <div class="container hero-inner">
-        <h1 id="heroTitle" class="glow" title="нажми">Стюха ✧ Егор</h1>
+        <h1 id="heroTitle" class="glow">Стюха ✧ Егор</h1>
         <p class="lead">8 лет и дальше</p>
         <a href="#story" class="btn">К истории</a>
         <div class="hint" id="tapHint">нажми на заголовок</div>
       </div>
-      <div class="celebrate" id="celebrate" aria-hidden="true">
-        <div class="aurora a1"></div>
-        <div class="aurora a2"></div>
-        <div class="aurora a3"></div>
+      <div class="celebrate" id="celebrate">
+        <div class="aurora a1"></div><div class="aurora a2"></div><div class="aurora a3"></div>
         <div class="sparkles" id="sparkles"></div>
         <div class="celebrate-text">8 лет и дальше</div>
       </div>
@@ -55,13 +45,10 @@
     <section id="story" class="section">
       <div class="container narrow">
         <h2 class="section-title">Наша история</h2>
-        <details class="story">
-          <summary>Открыть сказку</summary>
+        <details class="story"><summary>Открыть сказку</summary>
           <article class="prose">
-            <p>Однажды, под небом далёкой школьной галактики, встретились две юные звезды — Настя и Егор. Их первые огни были робкими, как свет далёких планет, но достаточно тёплыми, чтобы заметить друг друга среди миллионов искр.</p>
-            <p>Спустя время их орбиты снова пересеклись. Они узнали родной свет и стали идти рядом: то смеясь над мелочами, то молча делясь самым важным. Вечерние разговоры, маленькие традиции, общие идеи — всё это складывалось в созвездие будней, которое хотелось хранить.</p>
-            <p>С годами они нашли простую формулу тепла: быть рядом, когда нужно; давать воздух, когда важно; верить в маленькие победы друг друга. Так рождается чувство дома — не из стен, а из присутствия. И в их ночном небе появилась фраза, как тихая звезда-навигация: <em>8 лет и дальше</em>.</p>
-            <p>Эта история не про громкие драмы, а про свет. Про то, как два человека могут бережно нести его через время — в прогулках, музыке, фото и планах. Дальше будет больше. Ведь когда есть свой свет, даже самая долгая дорога кажется тёплой.</p>
+            <p>Однажды, под небом далёкой школьной галактики, встретились две юные звезды — Настя и Егор...</p>
+            <p>...Эта история не про громкие драмы, а про свет. Дальше будет больше.</p>
           </article>
         </details>
       </div>
@@ -72,19 +59,11 @@
         <h2 class="section-title">Музыка</h2>
         <p class="section-sub">Плейлисты, под которые сияют наши звёзды</p>
         <div class="music-grid">
-          <article class="card planet">
-            <div class="ring"></div>
-            <h3>Плейлист Насти</h3>
-            <div class="iframe-wrap">
-              <iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:100%;" src="https://music.yandex.ru/iframe/playlist/Chfufhfu/3" title="Плейлист Насти">Яндекс Музыка</iframe>
-            </div>
+          <article class="card planet"><div class="ring"></div><h3>Плейлист Насти</h3>
+            <div class="iframe-wrap"><iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:100%;" src="https://music.yandex.ru/iframe/playlist/Chfufhfu/3"></iframe></div>
           </article>
-          <article class="card planet">
-            <div class="ring"></div>
-            <h3>Плейлист Егора</h3>
-            <div class="iframe-wrap">
-              <iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:100%;" src="https://music.yandex.ru/iframe/playlist/W88005553535wgfututfutdftfuut/3" title="Плейлист Егора">Яндекс Музыка</iframe>
-            </div>
+          <article class="card planet"><div class="ring"></div><h3>Плейлист Егора</h3>
+            <div class="iframe-wrap"><iframe frameborder="0" allow="clipboard-write" style="border:none;width:100%;height:100%;" src="https://music.yandex.ru/iframe/playlist/W88005553535wgfututfutdftfuut/3"></iframe></div>
           </article>
         </div>
       </div>
@@ -92,57 +71,37 @@
 
     <section id="gallery" class="section">
       <div class="container">
-        <h2 class="section-title">Галерея</h2>
+        <div class="row-split"><h2 class="section-title">Галерея</h2><button id="toggleGallery" class="btn ghost">Свернуть</button></div>
         <p class="section-sub">Созвездие моментов</p>
         <div class="grid" id="grid" aria-live="polite"></div>
       </div>
-      <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-        <button class="close" id="lbClose" aria-label="Закрыть">×</button>
-        <img id="lbImg" alt="Фото" />
-        <button class="prev" id="lbPrev" aria-label="Предыдущее фото">‹</button>
-        <button class="next" id="lbNext" aria-label="Следующее фото">›</button>
-      </div>
+      <div class="lightbox" id="lightbox"><button class="close" id="lbClose">×</button><img id="lbImg" alt="Фото" /><button class="prev" id="lbPrev">‹</button><button class="next" id="lbNext">›</button></div>
     </section>
 
     <section id="countdown" class="section alt">
       <div class="container">
         <h2 class="section-title">Звёздные даты</h2>
         <div class="timers">
-          <article class="card holo">
-            <h3>До дня рождения Насти</h3>
-            <div class="orb">
-              <div class="orb-core">
-                <div class="time"><span id="Nd">00</span><small>дней</small></div>
-                <div class="time"><span id="Nh">00</span><small>часов</small></div>
-                <div class="time"><span id="Nm">00</span><small>минут</small></div>
-                <div class="time"><span id="Ns">00</span><small>секунд</small></div>
-              </div>
-            </div>
-            <p class="muted small">09.12.2011 (UTC+3)</p>
-          </article>
-          <article class="card holo">
-            <h3>До дня рождения Егора</h3>
-            <div class="orb">
-              <div class="orb-core">
-                <div class="time"><span id="Ed">00</span><small>дней</small></div>
-                <div class="time"><span id="Eh">00</span><small>часов</small></div>
-                <div class="time"><span id="Em">00</span><small>минут</small></div>
-                <div class="time"><span id="Es">00</span><small>секунд</small></div>
-              </div>
-            </div>
-            <p class="muted small">28.12.2011 (UTC+3)</p>
-          </article>
+          <article class="card holo"><h3>До дня рождения Насти</h3>
+            <div class="orb"><div class="orb-core">
+              <div class="time"><span id="Nd">00</span><small>дней</small></div>
+              <div class="time"><span id="Nh">00</span><small>часов</small></div>
+              <div class="time"><span id="Nm">00</span><small>минут</small></div>
+              <div class="time"><span id="Ns">00</span><small>секунд</small></div>
+            </div></div><p class="muted small">09.12.2011 (UTC+3)</p></article>
+          <article class="card holo"><h3>До дня рождения Егора</h3>
+            <div class="orb"><div class="orb-core">
+              <div class="time"><span id="Ed">00</span><small>дней</small></div>
+              <div class="time"><span id="Eh">00</span><small>часов</small></div>
+              <div class="time"><span id="Em">00</span><small>минут</small></div>
+              <div class="time"><span id="Es">00</span><small>секунд</small></div>
+            </div></div><p class="muted small">28.12.2011 (UTC+3)</p></article>
         </div>
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="container narrow">
-        <p>Сделано с теплом — Егор. stuhaeggor.ru</p>
-      </div>
-    </footer>
+    <footer class="footer"><div class="container narrow"><p>Сделано с теплом — Егор. stuhaeggor.ru</p></div></footer>
   </main>
 
-  <script src="assets/js/main.js" defer></script>
-</body>
-</html>
+  <script src="./assets/js/main.js" defer></script>
+</body></html>
