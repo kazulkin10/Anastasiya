@@ -1,14 +1,89 @@
-// v3 robust JS
-const PHOTOS_COUNT=59, TZ_OFFSET_MINUTES=180, BIRTHDAY_N={month:12,day:9}, BIRTHDAY_E={month:12,day:28};
-const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
-const tapHint=$('#tapHint'); setTimeout(()=>tapHint&&(tapHint.style.opacity='0.3'),2e3); setTimeout(()=>tapHint&&(tapHint.style.display='none'),7e3);
-const raf=window.requestAnimationFrame||(fn=>setTimeout(fn,16));
-function starfield(c,count,speed=.15){const x=c.getContext('2d');let w,h,DPR=Math.min(devicePixelRatio||1,2);function r(){const b=c.getBoundingClientRect();w=b.width;h=b.height||innerHeight*.82;c.width=w*DPR;c.height=h*DPR;x.setTransform(1,0,0,1,0,0);x.scale(DPR,DPR);}r();addEventListener('resize',r);const a=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.3,t:Math.random()*6.28}));let tx=0,ty=0;(function d(){x.clearRect(0,0,w,h);x.fillStyle='rgba(255,255,255,.95)';for(const s of a){s.t+=.01;const o=(Math.sin(s.t)*.5+.5)*.7+.3;x.globalAlpha=o;const p=s.x+tx*speed,q=s.y+ty*speed;x.beginPath();x.arc(p,q,s.r,0,6.28);x.fill()}x.globalAlpha=1;raf(d)})();addEventListener('mousemove',e=>{const cx=w/2,cy=h/2;tx=(e.clientX-cx)/30;ty=(e.clientY-cy)/30},{passive:!0});addEventListener('deviceorientation',e=>{if(!e.gamma&&!e.beta)return;tx=e.gamma||0;ty=e.beta||0},{passive:!0})}
-['layer-back','layer-mid','layer-front'].forEach((id,i)=>{const c=document.getElementById(id); if(c) starfield(c,[60,80,40][i],[.06,.12,.2][i]);});
-function nextBD({month,day}){const now=new Date();const makeY=y=>new Date(Date.UTC(y,month-1,day,0,-TZ_OFFSET_MINUTES,0));let t=makeY(now.getFullYear());if(t<now)t=makeY(now.getFullYear()+1);return t}
-function timer(p,o){const d=$(`#${p}d`),h=$(`#${p}h`),m=$(`#${p}m`),s=$(`#${p}s`);function u(){const diff=nextBD(o)-new Date();const pad=n=>String(n).padStart(2,'0');d.textContent=pad(Math.floor(diff/864e5));h.textContent=pad(Math.floor(diff/36e5)%24);m.textContent=pad(Math.floor(diff/6e4)%60);s.textContent=pad(Math.floor(diff/1e3)%60)}u();return setInterval(u,1e3)}
-timer('N',BIRTHDAY_N); timer('E',BIRTHDAY_E);
-const grid=$('#grid'), toggleBtn=$('#toggleGallery'); let galleryOpen=true; function setGallery(o){galleryOpen=o; grid.style.maxHeight=o?'':'0px'; grid.style.overflow=o?'':'hidden'; toggleBtn.textContent=o?'Свернуть':'Развернуть';}
-if(grid){const imgs=Array.from({length:PHOTOS_COUNT},(_,i)=>i+1); imgs.forEach((n,i)=>{const a=document.createElement('a');a.href=`./photos/${n}.jpg`;a.className='ph';a.dataset.index=i;const img=document.createElement('img');img.loading='lazy';img.alt=`Фото ${n}`;img.src=`./photos/${n}.jpg`;a.appendChild(img);grid.appendChild(a);}); setGallery(true); toggleBtn.addEventListener('click',()=>setGallery(!galleryOpen)); const lb=$('#lightbox'),img=$('#lbImg'),p=$('#lbPrev'),n=$('#lbNext'),c=$('#lbClose'); let ci=0; function openLB(i){ci=i;img.src=`./photos/${imgs[ci]}.jpg`;lb.classList.add('open');} function closeLB(){lb.classList.remove('open');img.src='';} function prev(){ci=(ci-1+imgs.length)%imgs.length;openLB(ci)} function next(){ci=(ci+1)%imgs.length;openLB(ci)} grid.addEventListener('click',e=>{const a=e.target.closest('a.ph');if(!a)return;e.preventDefault();openLB(parseInt(a.dataset.index,10));}); p.addEventListener('click',prev); n.addEventListener('click',next); c.addEventListener('click',closeLB); lb.addEventListener('click',e=>{if(e.target===lb)closeLB();}); document.addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')closeLB(); if(e.key==='ArrowLeft')prev(); if(e.key==='ArrowRight')next();});}
-const heroTitle=$('#heroTitle'), celebrate=$('#celebrate'); function vibrate(){if(!('vibrate'in navigator))return;const pat=[];let total=0;while(total<2e4){pat.push(200,150);total+=350}navigator.vibrate(pat)} function startCelebration(){celebrate.classList.add('open'); vibrate(); const box=$('#sparkles'); box.innerHTML=''; for(let i=0;i<100;i++){const s=document.createElement('span'); const x=Math.random()*100,y=Math.random()*100;Object.assign(s.style,{position:'absolute',left:x+'%',top:y+'%',width:(Math.random()*4+1)+'px',height:(Math.random()*4+1)+'px',background:'white',borderRadius:'50%',opacity:'0',boxShadow:'0 0 12px rgba(255,255,255,.85)'}); s.animate([{transform:'scale(.6)',opacity:0},{transform:'scale(1)',opacity:1,offset:.2},{transform:'scale(1.2)',opacity:0}],{duration:1300+Math.random()*1e3,delay:Math.random()*1e3,iterations:12}); box.appendChild(s);} setTimeout(()=>{celebrate.classList.remove('open'); navigator.vibrate&&navigator.vibrate(0)},2e4)} heroTitle&&heroTitle.addEventListener('click',startCelebration);
-let lastTap=0; function fallingStar(x=innerWidth*Math.random()){const s=document.createElement('div');Object.assign(s.style,{position:'fixed',left:x+'px',top:'-10px',width:'3px',height:'3px',background:'white',borderRadius:'50%',boxShadow:'0 0 18px rgba(255,255,255,.9)',zIndex:200});document.body.appendChild(s); s.animate([{transform:'translateY(-10px)',opacity:1},{transform:`translateY(${innerHeight+20}px)`,opacity:0}],{duration:1200,easing:'ease-out'}).onfinish=()=>s.remove()} addEventListener('dblclick',()=>fallingStar()); addEventListener('touchend',()=>{const t=Date.now(); if(t-lastTap<300)fallingStar(); lastTap=t},{passive:!0});
+// Настройки
+const PHOTOS_COUNT = 59;
+const TZ_OFFSET_MINUTES = 180; // UTC+3
+const BIRTHDAY_N = { month: 12, day: 9 };
+const BIRTHDAY_E = { month: 12, day: 28 };
+const $ = (s)=>document.querySelector(s);
+const $$ = (s)=>document.querySelectorAll(s);
+
+// Мягкий фон: частицы + градиентный «туман»
+(function bg(){
+  const c = document.getElementById('bg'); const x = c.getContext('2d');
+  let w,h,DPR=Math.min(devicePixelRatio||1,2);
+  function resize(){ w=c.clientWidth=c.parentElement.clientWidth; h=c.clientHeight=c.parentElement.clientHeight;
+    c.width=w*DPR; c.height=h*DPR; x.setTransform(1,0,0,1,0,0); x.scale(DPR,DPR); }
+  resize(); addEventListener('resize', resize);
+  const pts = Array.from({length:60},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.2,vy:(Math.random()-.5)*.2,r:Math.random()*1.5+0.6}));
+  (function tick(){
+    x.clearRect(0,0,w,h);
+    const g = x.createLinearGradient(0,0,w,h);
+    g.addColorStop(0,'rgba(124,92,255,.08)'); g.addColorStop(1,'rgba(0,212,255,.06)');
+    x.fillStyle=g; x.fillRect(0,0,w,h);
+    x.fillStyle='rgba(255,255,255,.9)';
+    for(const p of pts){
+      p.x+=p.vx; p.y+=p.vy; if(p.x<-10||p.x>w+10) p.vx*=-1; if(p.y<-10||p.y>h+10) p.vy*=-1;
+      x.globalAlpha=.25+.75*Math.random()*0.2; x.beginPath(); x.arc(p.x,p.y,p.r,0,6.28); x.fill();
+    }
+    x.globalAlpha=1; requestAnimationFrame(tick);
+  })();
+})();
+
+// Галерея: фильтры + лайтбокс
+(function gallery(){
+  const grid = document.getElementById('grid'); if(!grid) return;
+  const images = Array.from({length:PHOTOS_COUNT},(_,i)=>i+1)
+    .map(n=>({n, tag:(n%3===0?'спорт': n%2===0?'прогулки':'школа')}));
+  let current='all';
+  function render(){
+    grid.innerHTML='';
+    images.filter(it=> current==='all' || it.tag===current).forEach((it,idx)=>{
+      const a=document.createElement('a'); a.href=`./photos/${it.n}.jpg`; a.className='ph'; a.dataset.index=idx;
+      const img=document.createElement('img'); img.loading='lazy'; img.alt=`Фото ${it.n}`; img.src=`./photos/${it.n}.jpg`;
+      a.appendChild(img); grid.appendChild(a);
+    });
+  }
+  render();
+  $$('.chip').forEach(b=> b.addEventListener('click', ()=>{
+    $$('.chip').forEach(c=>c.classList.remove('active')); b.classList.add('active');
+    current=b.dataset.tag; render();
+  }));
+  const lb=$('#lightbox'), lbImg=$('#lbImg'), p=$('#lbPrev'), n=$('#lbNext'), c=$('#lbClose'); let idx=0;
+  function openLB(i){ idx=i; const list=[...grid.querySelectorAll('a.ph')]; lbImg.src=list[idx].href; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
+  function closeLB(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); lbImg.src=''; }
+  function prev(){ const list=[...grid.querySelectorAll('a.ph')]; idx=(idx-1+list.length)%list.length; lbImg.src=list[idx].href; }
+  function next(){ const list=[...grid.querySelectorAll('a.ph')]; idx=(idx+1)%list.length; lbImg.src=list[idx].href; }
+  grid.addEventListener('click',e=>{ const a=e.target.closest('a.ph'); if(!a) return; e.preventDefault(); const list=[...grid.querySelectorAll('a.ph')]; idx=list.indexOf(a); openLB(idx); });
+  p.addEventListener('click',prev); n.addEventListener('click',next); c.addEventListener('click',closeLB); lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+  document.addEventListener('keydown',e=>{ if(!lb.classList.contains('open'))return; if(e.key==='Escape') closeLB(); if(e.key==='ArrowLeft') prev(); if(e.key==='ArrowRight') next(); });
+})();
+
+// Дни рождения (UTC+3, корректно уезжает на следующий год)
+function nextBirthday({month, day}){
+  const now = new Date();
+  function makeY(y){ return new Date(Date.UTC(y, month-1, day, 0, -TZ_OFFSET_MINUTES, 0)); }
+  let t = makeY(now.getFullYear());
+  if (t < now) t = makeY(now.getFullYear()+1);
+  return t;
+}
+function timer(prefix, dateObj){
+  const d=$(`#${prefix}d`), h=$(`#${prefix}h`), m=$(`#${prefix}m`), s=$(`#${prefix}s`);
+  function up(){
+    const diff = nextBirthday(dateObj) - new Date();
+    const pad = n=>String(n).padStart(2,'0');
+    d.textContent=pad(Math.floor(diff/86400000));
+    h.textContent=pad(Math.floor((diff/3600000)%24));
+    m.textContent=pad(Math.floor((diff/60000)%60));
+    s.textContent=pad(Math.floor((diff/1000)%60));
+  }
+  up(); setInterval(up, 1000);
+}
+timer('N', BIRTHDAY_N); timer('E', BIRTHDAY_E);
+
+// Записка дня (localStorage)
+(function notes(){
+  const key='stuha-egor-note';
+  const area=$('#note'); if(!area) return;
+  area.value = localStorage.getItem(key) || '';
+  $('#saveNote').addEventListener('click', ()=>{ localStorage.setItem(key, area.value); area.classList.add('saved'); setTimeout(()=>area.classList.remove('saved'),600); });
+  $('#clearNote').addEventListener('click', ()=>{ area.value=''; localStorage.removeItem(key); });
+})();
